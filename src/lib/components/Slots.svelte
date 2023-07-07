@@ -3,17 +3,12 @@
   import { numberIsValid } from "../utils.js";
 
   export let number;
-  let numberUsed = false;
+  export let numberUsed;
   export let numSlots;
   let slots = Array(numSlots).fill(-1);
 
   export function resetGame() {
     slots = Array(numSlots).fill(-1);
-  }
-
-  $: {
-    number,
-    numberUsed = false;
   }
 
   // Check if game is lost
