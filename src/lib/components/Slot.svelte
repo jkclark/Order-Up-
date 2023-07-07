@@ -8,16 +8,17 @@
   export let value;
   export let potentialValue;
   export let slots;
-  let set = false;
+  export let numberUsed;
 
   function setValue() {
-    if (!set) {
-      if (numberIsValid(potentialValue, slots, index)) {
-        dispatch("change", {index: index, value: potentialValue})
-        set = true;
-      } else {
-        alert("Invalid slot for value");
-      }
+    if (value !== -1) {
+      alert("Slot already filled");
+    } else if (numberUsed) {
+      alert("Number already used")
+    } else if (numberIsValid(potentialValue, slots, index)) {
+      dispatch("change", {index: index, value: potentialValue})
+    } else {
+      alert("Invalid slot for value");
     }
   }
 </script>

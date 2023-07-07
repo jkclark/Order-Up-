@@ -3,7 +3,18 @@
   import { numberIsValid } from "../utils.js";
 
   export let number;
+  let numberUsed = false;
   export let numSlots;
+  let slots = Array(numSlots).fill(-1);
+
+  export function resetGame() {
+    slots = Array(numSlots).fill(-1);
+  }
+
+  $: {
+    number,
+    numberUsed = false;
+  }
 
   // Check if game is lost
   $: if (number) {
@@ -32,11 +43,10 @@
     return false;
   }
 
-  let slots = Array(numSlots).fill(-1);
-
   function handleSlotChange(event) {
     slots[event.detail.index] = event.detail.value;
     slots = slots;
+    numberUsed = true;
   }
 </script>
 
@@ -48,6 +58,7 @@
       value={slots[index]}
       potentialValue={number}
       {slots}
+      {numberUsed}
     />
   {/each}
 </div>
