@@ -18,6 +18,11 @@
     }
   }
 
+  // Check if game is won
+  $: if (slots.every((slot) => slot !== -1)) {
+    setTimeout(() => {alert("You win!")}, 300);
+  }
+
   function doesValidSlotExist(number, slots) {
     // Check open slots for validity of new number
 
