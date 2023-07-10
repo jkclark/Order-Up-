@@ -1,16 +1,16 @@
 <script>
   import { createEventDispatcher } from 'svelte';
 
-  import { NUMBER_NOT_DEFINED } from '../constants';
+  import { NUMBER_NOT_DEFINED } from '../constants.js';
+  import { number, resetNumber } from '../number.js';
   import { resetScore, score } from '../score.js';
   import Slots from './Slots.svelte';
 
   // Game parameters
   const numSlots = 2;
-  const maxNumber = 1000;
+  const maxNumber = 100;
 
   // Game state
-  let number = NUMBER_NOT_DEFINED;
   let gameIsOver = false;
   let slotsChild;
 
@@ -40,7 +40,7 @@
   function startNewGame() {
     gameIsOver = false;
     resetScore();
-    number = NUMBER_NOT_DEFINED;
+    resetNumber();
     slotsChild.resetSlots();
   }
 </script>
@@ -50,13 +50,12 @@
   <span>Score: {$score}</span>
   <div>
     <button on:click={slotsChild.handleGetNumberClick}>Get Number</button>
-    <span>Number: {number === NUMBER_NOT_DEFINED ? "--" : number}</span>
+    <span>Number: {$number === NUMBER_NOT_DEFINED ? "--" : $number}</span>
   </div>
   <!-- This seems like a lot of binds..? -->
   <Slots
     {numSlots}
     {maxNumber}
-    bind:number={number}
     bind:this={slotsChild}
     on:gameover={endGame}
   >
