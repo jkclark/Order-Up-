@@ -52,7 +52,6 @@
     <button on:click={slotsChild.handleGetNumberClick}>Get Number</button>
     <span>Number: {$number === NUMBER_NOT_DEFINED ? "--" : $number}</span>
   </div>
-  <!-- This seems like a lot of binds..? -->
   <Slots
     {numSlots}
     {maxNumber}
