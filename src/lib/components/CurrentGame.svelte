@@ -11,12 +11,7 @@
 
   // Game state
   let number = NUMBER_NOT_DEFINED;
-  let scoreValue;
   let slotsChild;
-
-  score.subscribe(value => {
-    scoreValue = value;
-  });
 
   let dispatch = createEventDispatcher();
 
@@ -35,7 +30,7 @@
 
 <div>
   <button on:click={slotsChild.startNewGame}>New Game</button>
-  <span>Score: {scoreValue}</span>
+  <span>Score: {$score}</span>
   <div>
     <button on:click={slotsChild.generateNumber}>Get Number</button>
     <span>Number: {number === NUMBER_NOT_DEFINED ? "--" : number}</span>
