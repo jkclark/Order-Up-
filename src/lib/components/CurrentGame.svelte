@@ -15,6 +15,12 @@
 
   let dispatch = createEventDispatcher();
 
+  function onKeyUp(event) {
+    if (event.code === "Space") {
+      slotsChild.handleGetNumberClick();
+    }
+  }
+
   function endGame(event) {
     // Alert user that game is over
     if (event.detail.won) {
@@ -32,7 +38,7 @@
   <button on:click={slotsChild.startNewGame}>New Game</button>
   <span>Score: {$score}</span>
   <div>
-    <button on:click={slotsChild.generateNumber}>Get Number</button>
+    <button on:click={slotsChild.handleGetNumberClick}>Get Number</button>
     <span>Number: {number === NUMBER_NOT_DEFINED ? "--" : number}</span>
   </div>
   <!-- This seems like a lot of binds..? -->
@@ -45,3 +51,5 @@
   >
   </Slots>
 </div>
+
+<svelte:window on:keyup={onKeyUp}/>
