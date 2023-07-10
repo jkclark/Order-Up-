@@ -28,6 +28,8 @@
     <br>
     <span>Games won: {gamesWon}</span>
     <br>
+    <span>Win percent: {gamesPlayed === 0 ? "--" : gamesWon / gamesPlayed * 100}%</span>
+    <br>
     <span>High score: {highScore}</span>
     <br>
     <span>Average score: {averageScore}</span>
