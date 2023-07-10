@@ -2,6 +2,11 @@
   import { score } from '../score.js';
 
   let [gamesPlayed, gamesWon, highScore, averageScore] = [0, 0, 0, 0];
+  const ROUND_DIGITS = 2;
+
+  function roundNumToDigits(num, digits) {
+    return Math.round(num * 10 ** digits) / 10 ** digits;
+  }
 
   export function updateStats(event) {
     // Games played
@@ -28,9 +33,9 @@
     <br>
     <span>Games won: {gamesWon}</span>
     <br>
-    <span>Win percent: {gamesPlayed === 0 ? "--" : gamesWon / gamesPlayed * 100}%</span>
+    <span>Win percent: {gamesPlayed === 0 ? "--" : roundNumToDigits(gamesWon / gamesPlayed * 100, ROUND_DIGITS)}%</span>
     <br>
     <span>High score: {highScore}</span>
     <br>
-    <span>Average score: {averageScore}</span>
+    <span>Average score: {roundNumToDigits(averageScore, ROUND_DIGITS)}</span>
 </div>
