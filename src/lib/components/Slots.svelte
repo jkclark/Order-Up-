@@ -97,7 +97,16 @@
     return true;
   }
 
-  export function generateNumber() {
+  export function handleGetNumberClick() {
+    if (number !== NUMBER_NOT_DEFINED && !slots.includes(number)) {
+      alert("Number must be placed before getting a new one");
+      return;
+    }
+
+    generateNumber();
+  }
+
+  function generateNumber() {
     do {
       number = Math.floor(Math.random(maxNumber) * 100) + 1;
     } while (slots.includes(number));
