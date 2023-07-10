@@ -2,15 +2,16 @@
   import { createEventDispatcher } from 'svelte';
 
   import { NUMBER_NOT_DEFINED } from '../constants';
-  import { score } from '../score.js';
+  import { resetScore, score } from '../score.js';
   import Slots from './Slots.svelte';
 
   // Game parameters
-  const numSlots = 10;
+  const numSlots = 2;
   const maxNumber = 1000;
 
   // Game state
   let number = NUMBER_NOT_DEFINED;
+  let gameIsOver = false;
   let slotsChild;
 
   let dispatch = createEventDispatcher();
@@ -22,6 +23,9 @@
   }
 
   function endGame(event) {
+    // Update game state
+    gameIsOver = true;
+
     // Alert user that game is over
     if (event.detail.won) {
       alert("Victory!");
@@ -32,10 +36,17 @@
     // Forward for updating of career info
     dispatch('gameover', event.detail);
   }
+
+  function startNewGame() {
+    gameIsOver = false;
+    resetScore();
+    number = NUMBER_NOT_DEFINED;
+    slotsChild.resetSlots();
+  }
 </script>
 
 <div>
-  <button on:click={slotsChild.startNewGame}>New Game</button>
+  <button disabled={!gameIsOver} on:click={startNewGame}>New Game</button>
   <span>Score: {$score}</span>
   <div>
     <button on:click={slotsChild.handleGetNumberClick}>Get Number</button>

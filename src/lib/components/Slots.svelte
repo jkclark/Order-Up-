@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 
 	import { NUMBER_NOT_DEFINED, UNASSIGNED_SLOT_VALUE } from '../constants';
-	import { incrementScore, resetScore } from '../score';
+	import { incrementScore } from '../score';
 	import Slot from './Slot.svelte';
 
   export let numSlots;
@@ -112,13 +112,7 @@
     } while (slots.includes(number));
   }
 
-  export function startNewGame() {
-    resetSlots();
-    resetScore();
-    number = NUMBER_NOT_DEFINED;
-  }
-
-  function resetSlots() {
+  export function resetSlots() {
     slots = Array(numSlots).fill(UNASSIGNED_SLOT_VALUE);
   }
 </script>
