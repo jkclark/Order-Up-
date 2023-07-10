@@ -2,6 +2,7 @@
   import { createEventDispatcher } from 'svelte';
 
   import { NUMBER_NOT_DEFINED } from '../constants';
+  import { score } from '../score.js';
   import Slots from './Slots.svelte';
 
   // Game parameters
@@ -9,9 +10,13 @@
   const maxNumber = 1000;
 
   // Game state
-  let score = 0;
   let number = NUMBER_NOT_DEFINED;
+  let scoreValue;
   let slotsChild;
+
+  score.subscribe(value => {
+    scoreValue = value;
+  });
 
   let dispatch = createEventDispatcher();
 
@@ -30,7 +35,7 @@
 
 <div>
   <button on:click={slotsChild.startNewGame}>New Game</button>
-  <span>Score: {score}</span>
+  <span>Score: {scoreValue}</span>
   <div>
     <button on:click={slotsChild.generateNumber}>Get Number</button>
     <span>Number: {number === NUMBER_NOT_DEFINED ? "--" : number}</span>
@@ -41,7 +46,6 @@
     {maxNumber}
     bind:number={number}
     bind:this={slotsChild}
-    bind:score={score}
     on:gameover={endGame}
   >
   </Slots>

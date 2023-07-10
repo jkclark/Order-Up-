@@ -1,4 +1,11 @@
 <script>
+  import { score } from '../score.js';
+
+  let scoreValue;
+  score.subscribe(value => {
+    scoreValue = value;
+  });
+
   let [gamesPlayed, gamesWon, highScore, averageScore] = [0, 0, 0, 0];
 
   export function updateStats(event) {
@@ -11,12 +18,12 @@
     }
 
     // High score
-    if (event.detail.score > highScore) {
-      highScore = event.detail.score;
+    if (scoreValue > highScore) {
+      highScore = scoreValue;
     }
 
     // Average score
-    averageScore = (averageScore * (gamesPlayed - 1) + event.detail.score) / gamesPlayed;
+    averageScore = (averageScore * (gamesPlayed - 1) + scoreValue) / gamesPlayed;
   }
 </script>
 <div>

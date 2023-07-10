@@ -2,11 +2,11 @@
 	import { createEventDispatcher } from 'svelte';
 
 	import { NUMBER_NOT_DEFINED, UNASSIGNED_SLOT_VALUE } from '../constants';
-  import Slot from './Slot.svelte';
+	import { incrementScore, resetScore } from '../score';
+	import Slot from './Slot.svelte';
 
   export let numSlots;
   export let maxNumber;
-  export let score;
   export let number;
 
   let slots;
@@ -20,14 +20,14 @@
   // Loss
   $: if (!doesValidSlotExist(number, slots)) {
     setTimeout(() => {
-      dispatch('gameover', { won: false, score: score });
+      dispatch('gameover', { won: false });
     }, 400);  // Let the number display update before alerting
   }
 
   // Win
   $: if (slots.every(slot => slot !== UNASSIGNED_SLOT_VALUE)) {
     setTimeout(() => {
-      dispatch('gameover', { won: true, score: score });
+      dispatch('gameover', { won: true });
     }, 400);  // Let the score display update before alerting
   }
 
@@ -57,7 +57,7 @@
     }
 
     // Do not allow overwriting of non-empty slot values
-    if (slots[index] !== UNASSIGNED_SLOT_VALUE) {
+    else if (slots[index] !== UNASSIGNED_SLOT_VALUE) {
       alert("Cannot overwrite slot with value");
     }
 
@@ -75,7 +75,7 @@
     else {
       slots[index] = number;
       slots = slots;
-      score++;
+      incrementScore();
     }
   }
 
@@ -105,7 +105,7 @@
 
   export function startNewGame() {
     resetSlots();
-    score = 0;
+    resetScore();
     number = NUMBER_NOT_DEFINED;
   }
 
