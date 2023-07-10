@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+
 	import { NUMBER_NOT_DEFINED, UNASSIGNED_SLOT_VALUE } from '../constants';
   import Slot from './Slot.svelte';
 
@@ -19,14 +20,14 @@
   // Loss
   $: if (!doesValidSlotExist(number, slots)) {
     setTimeout(() => {
-      dispatch('gameover', { won: false });
+      dispatch('gameover', { won: false, score: score });
     }, 400);  // Let the number display update before alerting
   }
 
   // Win
   $: if (slots.every(slot => slot !== UNASSIGNED_SLOT_VALUE)) {
     setTimeout(() => {
-      dispatch('gameover', { won: true });
+      dispatch('gameover', { won: true, score: score });
     }, 400);  // Let the score display update before alerting
   }
 
@@ -74,7 +75,7 @@
     else {
       slots[index] = number;
       slots = slots;
-      score += 1;
+      score++;
     }
   }
 

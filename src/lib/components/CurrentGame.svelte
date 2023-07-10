@@ -1,5 +1,7 @@
 <script>
-  import { NUMBER_NOT_DEFINED, UNASSIGNED_SLOT_VALUE } from '../constants';
+  import { createEventDispatcher } from 'svelte';
+
+  import { NUMBER_NOT_DEFINED } from '../constants';
   import Slots from './Slots.svelte';
 
   // Game parameters
@@ -11,6 +13,8 @@
   let number = NUMBER_NOT_DEFINED;
   let slotsChild;
 
+  let dispatch = createEventDispatcher();
+
   function endGame(event) {
     // Alert user that game is over
     if (event.detail.won) {
@@ -19,7 +23,8 @@
       alert("Game over...");
     }
 
-    // Update career info
+    // Forward for updating of career info
+    dispatch('gameover', event.detail);
   }
 </script>
 
