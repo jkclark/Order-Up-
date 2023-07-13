@@ -7,7 +7,7 @@
   import Slots from './Slots.svelte';
 
   // Game parameters
-  const numSlots = 2;
+  const numSlots = 10;
   const maxNumber = 100;
 
   // Game state

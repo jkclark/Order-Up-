@@ -1,19 +1,17 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 
-	import { NUMBER_NOT_DEFINED, UNASSIGNED_SLOT_VALUE } from '../constants';
-	import { number, setNumber } from '../number.js';
-	import { incrementScore } from '../score.js';
-	import Slot from './Slot.svelte';
+  import { NUMBER_NOT_DEFINED, UNASSIGNED_SLOT_VALUE } from '../constants';
+  import { number, setNumber } from '../number.js';
+  import { incrementScore } from '../score.js';
+  import { doesValidSlotExist, numberIsValidInSlot } from "../slotsLogic.js";
+  import Slot from './Slot.svelte';
 
   export let numSlots;
   export let maxNumber;
 
   let slots;
   resetSlots();
-
-  // TODO: There is too much going on in this file.
-  //       Break it up into smaller modules.
 
   // Detect game over
 	const dispatch = createEventDispatcher();
@@ -29,26 +27,6 @@
     setTimeout(() => {
       dispatch('gameover', { won: true });
     }, 400);  // Let the score display update before alerting
-  }
-
-  function doesValidSlotExist(number, slots) {
-    // Check open slots for validity of new number
-
-    // If the number is already in the slots (i.e., it was just added),
-    // then we're fine
-    if (slots.includes(number)) {
-      return true;
-    }
-
-    for (let i = 0; i < slots.length; i++) {
-      if (slots[i] === UNASSIGNED_SLOT_VALUE) {
-        if (numberIsValidInSlot(i)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
   }
 
   function handleSlotClick(index) {
@@ -67,7 +45,7 @@
     }
 
     // Do not allow a number to be placed out of order
-    else if (!numberIsValidInSlot(index)) {
+    else if (!numberIsValidInSlot($number, slots, index)) {
       alert("Cannot place number out of order");
     }
     
@@ -77,24 +55,6 @@
       slots = slots;
       incrementScore();
     }
-  }
-
-  function numberIsValidInSlot(index) {
-    // Check previous slots for validity
-    for (let checkIndex = index - 1; checkIndex >= 0; checkIndex--) {
-      if (slots[checkIndex] != -1 && $number < slots[checkIndex]) {
-        return false;
-      }
-    }
-
-    // Check next slots for validity
-    for (let checkIndex = index + 1; checkIndex < slots.length; checkIndex++) {
-      if (slots[checkIndex] != -1 && $number > slots[checkIndex]) {
-        return false;
-      }
-    }
-
-    return true;
   }
 
   export function handleGetNumberClick() {
