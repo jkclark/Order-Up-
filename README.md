@@ -1,5 +1,7 @@
 # Order Up! (Name WIP)
 
+Just a little project to mess around with Svelte.
+
 ### How to Play
 
 The goal of the game is to place 10 randomly generated numbers in order. You don't know what numbers will come next, so you have to think about where to place them. The game goes like this:
